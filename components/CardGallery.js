@@ -1,32 +1,41 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 
-const CardGallery = ({ cards }) => (
-  <View style={styles.gallery}>
-    {cards.map((card, index) => (
-      <View key={index} style={styles.card}>
-        <Text style={styles.name}>{card.name}</Text>
-        <Text style={styles.message}>{card.message}</Text>
-        {card.image && <Image source={{ uri: card.image }} style={styles.image} />}
-        {card.decoration && <Text style={styles.decoration}>{card.decoration}</Text>}
-      </View>
-    ))}
-  </View>
-);
+const CardGallery = ({ cards }) => {
+  return (
+    <FlatList
+      data={cards}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({ item }) => (
+        <View style={[styles.card, { backgroundColor: item.backgroundColor }]}>
+          {item.backgroundImage && (
+            <Image source={{ uri: item.backgroundImage }} style={styles.backgroundImage} />
+          )}
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.message}>{item.message}</Text>
+          
+          {/* Decoration Overlay */}
+          {item.decoration && <Text style={styles.decoration}>{item.decoration}</Text>}
+        </View>
+      )}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
-  gallery: { flexDirection: 'row', flexWrap: 'wrap' },
   card: {
-    width: 300, // Approx. 18 rem
+    width: '100%',
     padding: 10,
-    borderRadius: 8,
     backgroundColor: '#f9f9f9',
-    margin: 10,
+    marginVertical: 5,
+    borderRadius: 8,
+    overflow: 'hidden',
+    alignItems: 'center',
   },
-  name: { fontSize: 20, fontWeight: 'bold' },
-  message: { fontSize: 16, marginVertical: 10 },
-  image: { width: '100%', height: 100, resizeMode: 'cover', borderRadius: 8 },
-  decoration: { fontSize: 24, textAlign: 'center', marginTop: 10 },
+  backgroundImage: { width: '100%', height: 200, borderRadius: 8 },
+  name: { fontSize: 18, fontWeight: 'bold', marginTop: 10 },
+  message: { fontSize: 16, marginTop: 5, textAlign: 'center' },
+  decoration: { fontSize: 32, position: 'absolute', bottom: 10, right: 10 },
 });
 
 export default CardGallery;

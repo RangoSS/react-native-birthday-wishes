@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, Button } from 'react-native';
+import { ScrollView, StyleSheet, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CardEditor from '../../components/CardEditor';
 import CardGallery from '../../components/CardGallery';
